@@ -30,7 +30,11 @@ class BrokerConnection:
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
-        self.client.loop_forever()
+        # self.client.loop_forever()
+        self.client.loop_start()
+
+    def stop_receiving(self):
+        self.client.loop_stop(False)
 
     def publish(self, topic, payload):
         self.client.publish(topic, payload)

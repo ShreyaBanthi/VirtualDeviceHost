@@ -5,6 +5,7 @@ from BrokerConnection import BrokerConnection
 from TestConfiguration import TestConfiguration
 from VirtualDeviceRepository import VirtualDeviceRepository
 from DeviceHealthPublisher import DeviceHealthPublisher
+from ConfigurationManager import ConfigurationManager
 
 
 class TestApp:
@@ -26,6 +27,9 @@ class TestApp:
     def __init__(self):
         print("Started")
 
+        configuration_manager = ConfigurationManager()
+        configuration = configuration_manager.find_configuration('TestConfigurationFactory')
+
         self.virtual_device_repository = VirtualDeviceRepository()
 
         self.broker_connection = BrokerConnection("192.168.99.55", self.on_handle_message)
@@ -38,6 +42,22 @@ class TestApp:
         print('Now listening')
 
         self.broker_connection.start_receiving()
+
+        virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
+        for vd in virtual_devices:
+            vd.start()
+
+        self.device_health_publisher.start()
+
+        input("Press Enter to exit...")
+
+        for vd in virtual_devices:
+            vd.stop()
+
+        self.device_health_publisher.stop()
+        self.broker_connection.stop_receiving()
+
+        print('Exiting')
 
 
 if __name__ == '__main__':

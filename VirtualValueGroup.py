@@ -9,14 +9,22 @@ class VirtualValueGroup:
     message_template = ''
     virtual_values = []
     broker_connection = None
+    thread = None
 
     def __init__(self, output_topic, push_cycle_in_s, message_template, broker_connection):
         self.output_topic = output_topic
         self.push_cycle_in_s = push_cycle_in_s
         self.message_template = message_template
         self.broker_connection = broker_connection
-        #  asd
-        threading.Thread(target=lambda: every(push_cycle_in_s, self.generate)).start()
+        self.thread = threading.Thread(target=lambda: every(self.push_cycle_in_s, self.generate))
+        self.thread.setDaemon(True)
+
+    def start(self):
+        self.thread.start()
+
+    def stop(self):
+        # self.thread.stop()
+        pass
 
     def add_virtual_value(self, new_virtual_value):
         self.virtual_values.append(new_virtual_value)
