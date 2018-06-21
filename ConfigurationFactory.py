@@ -15,6 +15,10 @@ class ConfigurationFactory(metaclass=ABCMeta):
         return []
 
     @abstractmethod
+    def is_device_health_monitoring_enabled(self):
+        return False
+
+    @abstractmethod
     def get_device_health_topic(self):
         return ''
 

@@ -4,13 +4,11 @@ import importlib
 
 
 class ConfigurationManager:
-    def __init__(self):
-        pass
-
     def find_configuration(self, configuration_name):
         mod = importlib.import_module('Configuration.' + configuration_name)
         conf_class = getattr(mod, configuration_name)
         conf_instance = conf_class()
+        return conf_instance
         #configurations = ConfigurationFactory.__subclasses__()
         # if len(configurations) == 0:
         #     raise Exception('no configurations found!')

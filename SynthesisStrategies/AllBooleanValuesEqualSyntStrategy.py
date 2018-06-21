@@ -1,10 +1,14 @@
 from SyntStrategy import SyntStrategy
 
 
-class AverageBooleanSyntStrategy(SyntStrategy):
+class AllBooleanValuesEqualSyntStrategy(SyntStrategy):
 
-    def __init__(self):
-        pass
+    expected_value = False
+    default_value = False
+
+    def __init__(self, expected_value, default_value):
+        self.expected_value = expected_value
+        self.default_value = default_value
 
     def parse_truthiness(self, value):
         if value:
@@ -19,17 +23,12 @@ class AverageBooleanSyntStrategy(SyntStrategy):
             return False
 
     def synthesize(self, values):
-        true_count = 0
-        false_count = 0
+        if len(values) == 0:
+            return self.default_value
 
         for v in values:
             truthiness = self.parse_truthiness(v)
-            if truthiness:
-                true_count += 1
-            else:
-                false_count += 1
+            if truthiness != self.expected_value:
+                return False;
 
-        if true_count > false_count:
-            return True
-        else:
-            return False
+        return True

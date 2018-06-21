@@ -1,51 +1,53 @@
-from VirtualValue import VirtualValue
-from InputDataSource import InputDataSource
-from VirtualDevice import VirtualDevice
-from BrokerConnection import BrokerConnection
-from TestConfiguration import TestConfiguration
 from VirtualDeviceRepository import VirtualDeviceRepository
-from DeviceHealthPublisher import DeviceHealthPublisher
+from Monitoring.DeviceHealthPublisher import DeviceHealthPublisher
 from ConfigurationManager import ConfigurationManager
+from BrokerConnectionRepository import BrokerConnectionRepository
 
 
 class TestApp:
-    broker_connection = None
     virtual_device_repository = None
+    broker_connection_repository = None
     device_health_publisher = None
 
-    def on_handle_message(self, topic, msg):
+    def on_handle_message(self, broker_connection, topic, msg):
         virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
         for vd in virtual_devices:
-            vd.handle_mqtt_message(topic, msg)
-
-    # create virtual device instances from ontology
-    def initialize_virtual_devices(self):
-        vd = TestConfiguration.create_test_virtual_device(self.broker_connection)
-
-        self.virtual_device_repository.add_virtual_device(vd)
+            vd.handle_mqtt_message(broker_connection, topic, msg)
 
     def __init__(self):
         print("Started")
 
         configuration_manager = ConfigurationManager()
-        configuration = configuration_manager.find_configuration('TestConfigurationFactory')
+        configuration = configuration_manager.find_configuration('Scenario1ConfigurationFactory')
+        # configuration = TestConfigurationFactory()
 
         self.virtual_device_repository = VirtualDeviceRepository()
+        self.broker_connection_repository = BrokerConnectionRepository()
 
-        self.broker_connection = BrokerConnection("192.168.99.55", self.on_handle_message)
+        broker_connections = configuration.create_broker_connections()
+        for bc in broker_connections:
+            self.broker_connection_repository.add_broker_connection(bc)
 
-        self.initialize_virtual_devices();
+        # self.initialize_virtual_devices()
+        virtual_devices = configuration.create_virtual_devices()
+        for vd in virtual_devices:
+            self.virtual_device_repository.add_virtual_device(vd)
 
-        self.device_health_publisher = DeviceHealthPublisher(self.virtual_device_repository, self.broker_connection,
-                                                             'maproject/health/device-states', 5)
+        device_health_publisher_broker_connection = self.broker_connection_repository.get_broker_connection(
+            configuration.get_device_health_broker_connection())
+        self.device_health_publisher = DeviceHealthPublisher(self.virtual_device_repository,
+                                                             device_health_publisher_broker_connection,
+                                                             configuration.get_device_health_topic(), 5)
 
         print('Now listening')
 
-        self.broker_connection.start_receiving()
+        # self.broker_connection.start_receiving(self.on_handle_message)
+        for bc in self.broker_connection_repository.get_all_broker_connections():
+            bc.start_receiving(self.on_handle_message)
 
         virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
         for vd in virtual_devices:
-            vd.start()
+            vd.start(self.broker_connection_repository)
 
         self.device_health_publisher.start()
 
@@ -55,7 +57,9 @@ class TestApp:
             vd.stop()
 
         self.device_health_publisher.stop()
-        self.broker_connection.stop_receiving()
+
+        for bc in self.broker_connection_repository.get_all_broker_connections():
+            bc.stop_receiving()
 
         print('Exiting')
 

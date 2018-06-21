@@ -8,16 +8,20 @@ class VirtualValueGroup:
     push_cycle_in_s = 0
     message_template = ''
     virtual_values = []
-    broker_connection = None
+    broker_connection_name = None
+    broker_connection_repository = None
     thread = None
 
-    def __init__(self, output_topic, push_cycle_in_s, message_template, broker_connection):
+    def __init__(self, output_topic, push_cycle_in_s, message_template, broker_connection_name):
         self.output_topic = output_topic
         self.push_cycle_in_s = push_cycle_in_s
         self.message_template = message_template
-        self.broker_connection = broker_connection
+        self.broker_connection_name = broker_connection_name
         self.thread = threading.Thread(target=lambda: every(self.push_cycle_in_s, self.generate))
         self.thread.setDaemon(True)
+
+    def set_broker_connection_repository(self, broker_connection_repository):
+        self.broker_connection_repository = broker_connection_repository
 
     def start(self):
         self.thread.start()
@@ -40,4 +44,5 @@ class VirtualValueGroup:
         print('generated message sent: ' + msg)
 
     def publish(self, message):
-        self.broker_connection.publish(self.output_topic, message)
+        broker_connection = self.broker_connection_repository.get_broker_connection(self.broker_connection_name)
+        broker_connection.publish(self.output_topic, message)

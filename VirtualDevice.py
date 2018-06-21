@@ -13,17 +13,18 @@ class VirtualDevice:
         self.name = name
         print('Virtual Device \"' + name + '\" created.')
 
-    def start(self):
+    def start(self, broker_connection_repository):
         for vvg in self.virtual_value_groups:
+            vvg.set_broker_connection_repository(broker_connection_repository)
             vvg.start()
 
     def stop(self):
         for vvg in self.virtual_value_groups:
             vvg.stop()
 
-    def handle_mqtt_message(self, topic, msg):
+    def handle_mqtt_message(self, broker_connection, topic, msg):
         for ids in self.input_data_sources:
-            if ids.source_topic == topic:
+            if ids.source_topic == topic and ids.broker_connection_name == broker_connection.connection_name:
                 ids.handle_input_message(topic, msg)
 
     def add_input_data_source_raw(self, name, source_topic):

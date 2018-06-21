@@ -4,6 +4,7 @@ import paho.mqtt.client as mqtt
 class BrokerConnection:
     client = None
     handler_method = None
+    connection_name = ''
 
     # The callback for when the client receives a CONNACK response from the server.
     def on_connect(self, client, userdata, flags, rc):
@@ -14,10 +15,10 @@ class BrokerConnection:
         client.subscribe("#")
 
     def on_message(self, client, userdata, msg):
-        self.handler_method(msg.topic, msg)
+        self.handler_method(self, msg.topic, msg)
 
-    def __init__(self, hostname, handler_method):
-        self.handler_method = handler_method
+    def __init__(self, connection_name, hostname):
+        self.connection_name = connection_name
 
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
@@ -25,7 +26,8 @@ class BrokerConnection:
 
         self.client.connect(hostname, 1883, 60)
 
-    def start_receiving(self):
+    def start_receiving(self, handler_method):
+        self.handler_method = handler_method
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
