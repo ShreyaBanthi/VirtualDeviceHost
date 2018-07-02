@@ -26,6 +26,9 @@ class VirtualDevice:
         for ids in self.input_data_sources:
             if ids.source_topic == topic and ids.broker_connection_name == broker_connection.connection_name:
                 ids.handle_input_message(topic, msg)
+        for vf in self.virtual_functions:
+            if vf.trigger_broker_connection_name == broker_connection and vf.trigger_topic == topic:
+                vf.handle_trigger_message(topic, msg)
 
     def add_input_data_source_raw(self, name, source_topic):
         self.input_data_sources.append(InputDataSource(name, source_topic))

@@ -6,6 +6,7 @@ from VirtualValueGroup import VirtualValueGroup
 from BrokerConnection import BrokerConnection
 from SynthesisStrategies.MaximumSyntStrategy import MaximumSyntStrategy
 from SynthesisStrategies.MovingAverageSyntStrategy import MovingAverageSyntStrategy
+from VirtualValues.Packaging.StringReplacePackagerStrategy import StringReplacePackagerStrategy
 
 
 class Scenario1ConfigurationFactory(ConfigurationFactory):
@@ -27,20 +28,22 @@ class Scenario1ConfigurationFactory(ConfigurationFactory):
 
         vvg1 = VirtualValueGroup('facility-system/temperature/room-1', 5,
                                  '{measured_temperature:$0, max_temperature:$1, moving_average_temperature:$2}', "input")
+        vvg1.set_packager_strategy(StringReplacePackagerStrategy(
+            '{measured_temperature:$0, max_temperature:$1, moving_average_temperature:$2}'))
 
         # add virtual values
-        vv1 = VirtualValue('Temp', '$0')
+        vv1 = VirtualValue('Current Temperature Value', '$0')
         vv1.add_mapping(ids1, 'temperature')
         vv1.add_mapping(ids2, '')
         vvg1.add_virtual_value(vv1)
 
-        vv2 = VirtualValue('Temp', '$1')
+        vv2 = VirtualValue('Maximum Temperature Value', '$1')
         vv2.add_mapping(ids1, 'temperature')
         vv2.add_mapping(ids2, '')
         vv2.set_synthesis_strategy(MaximumSyntStrategy())
         vvg1.add_virtual_value(vv2)
 
-        vv3 = VirtualValue('asd', '$2')
+        vv3 = VirtualValue('Moving Average Temperature Value', '$2')
         vv3.add_mapping(ids1, 'temperature')
         vv3.add_mapping(ids2, '')
         vv3.set_synthesis_strategy(MovingAverageSyntStrategy(12))
