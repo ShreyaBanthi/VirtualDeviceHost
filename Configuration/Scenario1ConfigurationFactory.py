@@ -7,6 +7,10 @@ from BrokerConnection import BrokerConnection
 from SynthesisStrategies.MaximumSyntStrategy import MaximumSyntStrategy
 from SynthesisStrategies.MovingAverageSyntStrategy import MovingAverageSyntStrategy
 from VirtualValues.Packaging.StringReplacePackagerStrategy import StringReplacePackagerStrategy
+# from SynthesisStrategies import *
+
+# import SynthesisStrategies
+# import VirtualValues.Packaging
 
 
 class Scenario1ConfigurationFactory(ConfigurationFactory):

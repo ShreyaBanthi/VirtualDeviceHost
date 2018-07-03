@@ -17,4 +17,4 @@ class MovingAverageSyntStrategy(SyntStrategy):
         if len(self.data_set) > self.data_set_size:
             self.data_set.pop(0)
         moving_avg = reduce(lambda x, y: x + y, self.data_set) / len(self.data_set)
-        return moving_avg
+        return round(moving_avg, 2)
