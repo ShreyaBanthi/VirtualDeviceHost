@@ -18,7 +18,8 @@ class TestApp:
         print("Started")
 
         configuration_manager = ConfigurationManager()
-        configuration = configuration_manager.find_configuration('Scenario1ConfigurationFactory')
+        # configuration = configuration_manager.find_configuration('Scenario1ConfigurationFactory')
+        configuration = configuration_manager.find_configuration('Scenario6ConfigurationFactory')
         # configuration = TestConfigurationFactory()
 
         self.virtual_device_repository = VirtualDeviceRepository()

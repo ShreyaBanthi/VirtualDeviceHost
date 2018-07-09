@@ -17,6 +17,8 @@ class VirtualDevice:
         for vvg in self.virtual_value_groups:
             vvg.set_broker_connection_repository(broker_connection_repository)
             vvg.start()
+        for vf in self.virtual_functions:
+            vf.set_broker_connection_repository(broker_connection_repository)
 
     def stop(self):
         for vvg in self.virtual_value_groups:
@@ -27,8 +29,8 @@ class VirtualDevice:
             if ids.source_topic == topic and ids.broker_connection_name == broker_connection.connection_name:
                 ids.handle_input_message(topic, msg)
         for vf in self.virtual_functions:
-            if vf.trigger_broker_connection_name == broker_connection and vf.trigger_topic == topic:
-                vf.handle_trigger_message(topic, msg)
+            if vf.trigger_broker_connection_name == broker_connection.connection_name and vf.trigger_topic == topic:
+                vf.handle_trigger_message(broker_connection, topic, msg)
 
     def add_input_data_source_raw(self, name, source_topic):
         self.input_data_sources.append(InputDataSource(name, source_topic))

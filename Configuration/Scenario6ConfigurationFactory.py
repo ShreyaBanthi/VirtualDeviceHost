@@ -8,10 +8,11 @@ from VirtualFunctions.OutputTarget import OutputTarget
 from BrokerConnection import BrokerConnection
 from SynthesisStrategies.MaximumSyntStrategy import MaximumSyntStrategy
 from SynthesisStrategies.MovingAverageSyntStrategy import MovingAverageSyntStrategy
-from VirtualFunctions.OutputGeneratorStrategies.CopyOutputGeneratorStrategy import CopyOutputGeneratorStrategy
+from VirtualFunctions.OutputGeneratorStrategies.RegexReplaceOutputGeneratorStrategy \
+    import RegexReplaceOutputGeneratorStrategy
 
 
-class Scenario5ConfigurationFactory(ConfigurationFactory):
+class Scenario6ConfigurationFactory(ConfigurationFactory):
     def get_device_health_broker_connection(self):
         return 'output'
 
@@ -23,10 +24,14 @@ class Scenario5ConfigurationFactory(ConfigurationFactory):
         vd = VirtualDevice('Room 12')
 
         vf = VirtualFunction('Light-Switcher', 'input', 'maproject/light/1')
-        vf.add_output_target(OutputTarget('Light 2', 'output', 'maproject/light/2', CopyOutputGeneratorStrategy()))
-        vf.add_output_target(OutputTarget('Light 3', 'output', 'maproject/light/3', CopyOutputGeneratorStrategy()))
-        vf.add_output_target(OutputTarget('Light 4', 'output', 'maproject/light/4', CopyOutputGeneratorStrategy()))
-        vf.add_output_target(OutputTarget('Light 5', 'output', 'maproject/light/5', CopyOutputGeneratorStrategy()))
+        vf.add_output_target(OutputTarget('Light 2', 'output', 'maproject/light/2',
+                                          RegexReplaceOutputGeneratorStrategy('myId:(\d)*', 'myId:101')))
+        vf.add_output_target(OutputTarget('Light 3', 'output', 'maproject/light/3',
+                                          RegexReplaceOutputGeneratorStrategy('myId:(\d)*', 'myId:102')))
+        vf.add_output_target(OutputTarget('Light 4', 'output', 'maproject/light/4',
+                                          RegexReplaceOutputGeneratorStrategy('myId:(\d)*', 'myId:103')))
+        vf.add_output_target(OutputTarget('Light 5', 'output', 'maproject/light/5',
+                                          RegexReplaceOutputGeneratorStrategy('myId:(\d)*', 'myId:104')))
 
         vd.add_virtual_function(vf)
 

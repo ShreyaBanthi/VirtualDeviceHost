@@ -47,7 +47,7 @@ class VirtualValueGroup:
         self.virtual_values.append(new_virtual_value)
 
     def generate(self):
-        print('generate')
+        print('generating virtual value group')
         # msg = self.message_template
         # for vv in self.virtual_values:
 #             values = vv.aggregate_values()
