@@ -42,10 +42,10 @@ class Scenario6ConfigurationFactory(ConfigurationFactory):
     def create_broker_connections(self):
         broker_connections = []
 
-        input_connection = BrokerConnection("input", "192.168.99.55")
+        input_connection = BrokerConnection("input", "192.168.1.3")
         broker_connections.append(input_connection)
 
-        output_connection = BrokerConnection("output", "192.168.99.55")
+        output_connection = BrokerConnection("output", "192.168.1.3")
         broker_connections.append(output_connection)
 
         return broker_connections
