@@ -16,7 +16,7 @@ class VirtualFunction:
     def handle_trigger_message(self, broker_connection, topic, msg):
         if self.trigger_broker_connection_name != broker_connection.connection_name or self.trigger_topic != topic:
             return
-        self.execute(msg)
+        self.execute(msg)  # TODO: put in queue, have handle thread
 
     def set_broker_connection_repository(self, broker_connection_repository):
         self.broker_connection_repository = broker_connection_repository

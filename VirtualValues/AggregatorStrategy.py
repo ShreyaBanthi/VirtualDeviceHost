@@ -7,5 +7,9 @@ class AggregatorStrategy(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def aggregate(self):
-        return []
+    def aggregate(self, input_data_sources):
+        pass
+
+    @abstractmethod
+    def synthesize_value(self):
+        return None

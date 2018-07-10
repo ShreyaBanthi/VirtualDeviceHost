@@ -1,13 +1,8 @@
 from ConfigurationFactory import ConfigurationFactory
-from VirtualValue import VirtualValue
-from InputDataSource import InputDataSource
 from VirtualDevice import VirtualDevice
-from VirtualValueGroup import VirtualValueGroup
 from VirtualFunctions.VirtualFunction import VirtualFunction
 from VirtualFunctions.OutputTarget import OutputTarget
 from BrokerConnection import BrokerConnection
-from SynthesisStrategies.MaximumSyntStrategy import MaximumSyntStrategy
-from SynthesisStrategies.MovingAverageSyntStrategy import MovingAverageSyntStrategy
 from VirtualFunctions.OutputGeneratorStrategies.RegexReplaceOutputGeneratorStrategy \
     import RegexReplaceOutputGeneratorStrategy
 
@@ -42,10 +37,10 @@ class Scenario6ConfigurationFactory(ConfigurationFactory):
     def create_broker_connections(self):
         broker_connections = []
 
-        input_connection = BrokerConnection("input", "192.168.1.3")
+        input_connection = BrokerConnection("input", "192.168.1.100")
         broker_connections.append(input_connection)
 
-        output_connection = BrokerConnection("output", "192.168.1.3")
+        output_connection = BrokerConnection("output", "192.168.1.100")
         broker_connections.append(output_connection)
 
         return broker_connections
