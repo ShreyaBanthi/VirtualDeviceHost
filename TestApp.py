@@ -5,8 +5,8 @@ class TestApp:
     def __init__(self):
         print("Started")
         virtual_device_host = VirtualDeviceHost()
-        # virtual_device_host.initialize('Scenario1ConfigurationFactory')
-        virtual_device_host.initialize('Scenario2ConfigurationFactory')
+        virtual_device_host.initialize('Scenario1ConfigurationFactory')
+        # virtual_device_host.initialize('Scenario2ConfigurationFactory')
         # virtual_device_host.initialize('Scenario6ConfigurationFactory')
 
         print('Now listening')

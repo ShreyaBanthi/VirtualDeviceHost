@@ -18,9 +18,9 @@ class VirtualValue:
     #     self.mappings.append(InputDataSourceMapping(input_data_source, path))
 
     def add_input_data_source(self, input_data_source):
-        for ids in self.input_data_sources:
-            if ids.name == input_data_source.name:
-                raise Exception('duplicate input data source name!')
+        # for ids in self.input_data_sources:
+            #  if ids.name == input_data_source.name:
+                # raise Exception('duplicate input data source name!')
         self.input_data_sources.append(input_data_source)
 
     def set_aggregator_strategy(self, new_aggregator_strategy):
