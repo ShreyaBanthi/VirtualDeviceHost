@@ -4,7 +4,6 @@ from VirtualValues.InputDataSourceMapping import InputDataSourceMapping
 class VirtualValue:
     name = 'unnamed'
     message_template_symbol = ''
-    mappings = []
     input_data_sources = []
     aggregator = None
     synthesize_strategy = None
@@ -13,14 +12,17 @@ class VirtualValue:
     def __init__(self, name, message_template_symbol):
         self.name = name
         self.message_template_symbol = message_template_symbol
+        self.input_data_sources = []
+        self.aggregator = None
+        self.synthesize_strategy = None
 
     # def add_mapping(self, input_data_source, path):
     #     self.mappings.append(InputDataSourceMapping(input_data_source, path))
 
     def add_input_data_source(self, input_data_source):
-        # for ids in self.input_data_sources:
-            #  if ids.name == input_data_source.name:
-                # raise Exception('duplicate input data source name!')
+        for ids in self.input_data_sources:
+            if ids.name == input_data_source.name:
+                raise Exception('duplicate input data source name!')
         self.input_data_sources.append(input_data_source)
 
     def set_aggregator_strategy(self, new_aggregator_strategy):
@@ -42,6 +44,8 @@ class VirtualValue:
         return values
 
     def run_aggregator(self):
+        if self.aggregator is None:
+            raise Exception('no aggregator defined')
         self.aggregator.aggregate(self.input_data_sources)
 
     def synthesize_value(self):
@@ -51,6 +55,6 @@ class VirtualValue:
         synth_value = self.aggregator.synthesize_value()
 
         # TODO: get value, aggregate, synthesize
-        return synth_value;
+        return synth_value
 
 
