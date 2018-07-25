@@ -27,6 +27,7 @@ class VirtualFunction:
         print('INPUT: ' + msg_string)
         for ot in self.output_targets:
             output_message = ot.generator_strategy.generate(msg_string)
-            broker_connection = self.broker_connection_repository.get_broker_connection(ot.output_broker_connection_name)
-            broker_connection.publish(ot.output_topic, output_message)
-            print('OUTPUT: ' + output_message)
+            if ot is not None:
+                broker_connection = self.broker_connection_repository.get_broker_connection(ot.output_broker_connection_name)
+                broker_connection.publish(ot.output_topic, output_message)
+                print('OUTPUT: ' + output_message)
