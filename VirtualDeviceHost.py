@@ -59,7 +59,7 @@ class VirtualDeviceHost:
             bc.stop_receiving()
 
     def on_handle_message(self, broker_connection, topic, msg):
-        print(topic)
+        # print(topic)
         virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
         for vd in virtual_devices:
             vd.handle_mqtt_message(broker_connection, topic, msg)

@@ -22,4 +22,4 @@ class BasicFloatAverageAggregatorStrategy(AggregatorStrategy):
         if len(values) == 0:
             return 0
         values_sum = sum(values)
-        return values_sum / len(values)
+        return round(values_sum / len(values), 2)

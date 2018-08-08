@@ -22,7 +22,7 @@ class VirtualValueGroup:
         self.broker_connection_name = broker_connection_name
         # self.thread = threading.Thread(target=lambda: every(self.push_cycle_in_s, self.generate))
         self.worker_thread = threading.Thread(target=lambda: self.handle_work())
-        # self.worker_thread.setDaemon(True)  no longer necessary because of is_active
+        self.worker_thread.setDaemon(True)  # no longer necessary because of is_active
         self.wait_event = threading.Event()
 
     def __hash__(self):
@@ -96,7 +96,7 @@ class VirtualValueGroup:
 
     def handle_work(self):
         while self.is_active:
-            print('handle_work for ' + self.output_topic)
+            # print('handle_work for ' + self.output_topic)
             # aggregate values
             for vv in self.virtual_values:
                 vv.run_aggregator()
