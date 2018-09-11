@@ -1,12 +1,13 @@
-from ConfigurationFactory import ConfigurationFactory
+from datetime import timedelta
+from ConfigurationStrategy import ConfigurationStrategy
 from BrokerConnection import BrokerConnection
 
 
-class Scenario3ConfigurationFactory(ConfigurationFactory):
-    def get_device_health_broker_connection(self):
+class Scenario3ConfigurationFactory(ConfigurationStrategy):
+    def get_monitoring_broker_connection(self):
         return 'output'
 
-    def get_device_health_topic(self):
+    def get_monitoring_output_topic(self):
         return 'maproject/health/device-states'
 
     def create_virtual_devices(self):
@@ -25,5 +26,8 @@ class Scenario3ConfigurationFactory(ConfigurationFactory):
 
         return broker_connections
 
-    def is_device_health_monitoring_enabled(self):
+    def is_monitoring_enabled(self):
         return True
+
+    def get_monitoring_grace_period_duration(self):
+        return timedelta(seconds=5)

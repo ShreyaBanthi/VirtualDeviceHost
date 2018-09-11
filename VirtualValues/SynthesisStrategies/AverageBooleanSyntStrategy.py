@@ -1,4 +1,4 @@
-from SyntStrategy import SyntStrategy
+
 
 '''
 class AverageBooleanSyntStrategy(SyntStrategy):

@@ -1,9 +1,10 @@
 import threading
+import json
+import logging
+from datetime import datetime
 
-from BrokerConnection import BrokerConnection
-from VirtualDeviceRepository import VirtualDeviceRepository
-
-from Utilities import every
+from Monitoring.MonitoringOutputMessage import MonitoringOutputMessage
+from Utilities import delayed_every
 
 
 class DeviceHealthPublisher:
@@ -12,13 +13,20 @@ class DeviceHealthPublisher:
     publish_topic = ''
     publish_cycle_in_s = 60
     thread = None
+    grace_period_duration = None
 
-    def __init__(self, virtual_device_repository, broker_connection, publish_topic, publish_cycle_in_s):
+    def __init__(self, virtual_device_repository, broker_connection, publish_topic, publish_cycle_in_s,
+                 grace_period_duration):
         self.virtual_device_repository = virtual_device_repository
         self.broker_connection = broker_connection
         self.publish_topic = publish_topic
         self.publish_cycle_in_s = publish_cycle_in_s
-        self.thread = threading.Thread(target=lambda: every(publish_cycle_in_s, self.publish_health_state))
+        self.grace_period_duration = grace_period_duration
+        grace_period_in_seconds = 0
+        if grace_period_duration is not None:
+            grace_period_in_seconds = grace_period_duration.total_seconds()
+        self.thread = threading.Thread(target=lambda: delayed_every(grace_period_in_seconds, publish_cycle_in_s,
+                                                                    self.publish_health_state))
         self.thread.setDaemon(True)
 
     def start(self):
@@ -28,5 +36,23 @@ class DeviceHealthPublisher:
         pass
 
     def publish_health_state(self):
-        print('Publishing health state')
-        self.broker_connection.publish(self.publish_topic, '{}')
+        virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
+
+        output = MonitoringOutputMessage()
+
+        # check all devices
+
+        # reference_timestamp = datetime.now().time()
+        for vd in virtual_devices:
+            if vd.check_if_healthy():
+                output.states[vd.name] = "normal"
+            else:
+                output.states[vd.name] = "degraded"
+
+        # convert to json
+
+        # output_json = json.dumps(output)
+        output_json = output.to_json()
+
+        logging.info('Publishing health state: ' + output_json)
+        self.broker_connection.publish(self.publish_topic, output_json)

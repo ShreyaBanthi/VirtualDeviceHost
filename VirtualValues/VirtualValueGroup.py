@@ -1,5 +1,7 @@
 import threading
 import uuid
+import logging
+
 
 from Utilities import every, is_number
 
@@ -7,7 +9,7 @@ from Utilities import every, is_number
 class VirtualValueGroup:
     id = ''
     output_topic = ''
-    virtual_values = []
+    virtual_values = None
     broker_connection_name = None
     broker_connection_repository = None
     worker_thread = None
@@ -15,12 +17,14 @@ class VirtualValueGroup:
     packager_strategy = None
     is_active = False
     wait_event = None
+    qos_level = 0
 
-    def __init__(self, output_topic, broker_connection_name):
+    def __init__(self, output_topic, broker_connection_name, qos_level):
         self.id = str(uuid.uuid4())
+        self.qos_level = qos_level
         self.output_topic = output_topic
         self.broker_connection_name = broker_connection_name
-        # self.thread = threading.Thread(target=lambda: every(self.push_cycle_in_s, self.generate))
+        self.virtual_values = []
         self.worker_thread = threading.Thread(target=lambda: self.handle_work())
         self.worker_thread.setDaemon(True)  # no longer necessary because of is_active
         self.wait_event = threading.Event()
@@ -51,14 +55,13 @@ class VirtualValueGroup:
 
     def stop(self):
         self.is_active = False
-        # self.thread.stop()
         self.wait_event.set()  # so thread can stop gracefully
 
     def add_virtual_value(self, new_virtual_value):
         self.virtual_values.append(new_virtual_value)
 
     def generate(self):
-        print('generating virtual value group')
+        logging.info('generating virtual value group')
         # msg = self.message_template
         # for vv in self.virtual_values:
 #             values = vv.aggregate_values()
@@ -72,12 +75,15 @@ class VirtualValueGroup:
         msg = self.packager_strategy.package(self.virtual_values, synthesized_values)
         # TODO: ggf. deduplicaten? if same as before, maybe not publish
         self.publish(msg)
-        print('OUTPUT: ' + msg)
+        logging.info('OUTPUT: ' + msg)
+
+    def set_wait_event(self):
+        self.wait_event.set()
 
     def publish(self, message):
-        print('OUTPUT: ' + message)
+        logging.info('OUTPUT: ' + message)
         broker_connection = self.broker_connection_repository.get_broker_connection(self.broker_connection_name)
-        broker_connection.publish(self.output_topic, message)
+        broker_connection.publish(self.output_topic, message, self.qos_level)
 
     def handle_input_message(self, broker_connection, topic, msg):
         # if self.trigger_broker_connection_name != broker_connection.connection_name or self.trigger_topic != topic:

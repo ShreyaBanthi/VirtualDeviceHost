@@ -1,6 +1,4 @@
-from functools import reduce
-
-from VirtualValues.Packaging.PackagerStrategy import PackagerStrategy
+from VirtualValues.PackagerStrategy import PackagerStrategy
 
 
 class StringReplacePackagerStrategy(PackagerStrategy):

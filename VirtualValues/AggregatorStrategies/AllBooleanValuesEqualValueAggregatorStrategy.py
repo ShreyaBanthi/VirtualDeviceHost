@@ -2,7 +2,6 @@ from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
 class AllBooleanValuesEqualValueAggregatorStrategy(AggregatorStrategy):
-
     last_values = {}
     expected_value = False
 

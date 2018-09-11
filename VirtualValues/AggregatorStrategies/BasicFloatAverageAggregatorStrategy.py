@@ -2,7 +2,6 @@ from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
 class BasicFloatAverageAggregatorStrategy(AggregatorStrategy):
-
     last_values = {}
 
     def __init__(self):

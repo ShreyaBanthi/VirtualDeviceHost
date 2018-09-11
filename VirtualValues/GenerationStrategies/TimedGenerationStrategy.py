@@ -17,7 +17,7 @@ class TimedGenerationStrategy(GenerationStrategy):
 
     def on_wake_up(self):
         self.has_cycle_completed = True
-        self.virtual_value_group.set()
+        self.virtual_value_group.set_wait_event()
 
     def should_generate(self):
         if self.has_cycle_completed:

@@ -2,7 +2,7 @@ import time, traceback
 from datetime import datetime
 from VirtualValues.GenerationStrategy import GenerationStrategy
 
-# if DataReceiver timnestamp newer than saved last sent timestamp value
+# if DataReceiver timestamp newer than saved last sent timestamp value
 
 
 class OnDataReceivedGenerationStrategy(GenerationStrategy):

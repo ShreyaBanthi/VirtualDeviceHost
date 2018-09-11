@@ -1,6 +1,8 @@
+import logging
+
 from VirtualDeviceRepository import VirtualDeviceRepository
 from Monitoring.DeviceHealthPublisher import DeviceHealthPublisher
-from ConfigurationManager import ConfigurationManager
+from ConfigurationFactory import ConfigurationFactory
 from BrokerConnectionRepository import BrokerConnectionRepository
 
 
@@ -11,10 +13,8 @@ class VirtualDeviceHost:
     active_configuration = None
 
     def initialize(self, configuration_name):
-        configuration_manager = ConfigurationManager()
-        self.active_configuration = configuration_manager.find_configuration(configuration_name)
-        # configuration = configuration_manager.find_configuration('Scenario6ConfigurationFactory')
-        # configuration = TestConfigurationFactory()
+        configuration_factory = ConfigurationFactory()
+        self.active_configuration = configuration_factory.create_configuration(configuration_name)
 
         self.virtual_device_repository = VirtualDeviceRepository()
         self.broker_connection_repository = BrokerConnectionRepository()
@@ -23,7 +23,6 @@ class VirtualDeviceHost:
         for bc in broker_connections:
             self.broker_connection_repository.add_broker_connection(bc)
 
-        # self.initialize_virtual_devices()
         virtual_devices = self.active_configuration.create_virtual_devices()
         for vd in virtual_devices:
             self.virtual_device_repository.add_virtual_device(vd)
@@ -33,7 +32,8 @@ class VirtualDeviceHost:
                 self.active_configuration.get_device_health_broker_connection())
             self.device_health_publisher = DeviceHealthPublisher(self.virtual_device_repository,
                                                                  device_health_publisher_broker_connection,
-                                                                 self.active_configuration.get_device_health_topic(), 5)
+                                                                 self.active_configuration.get_device_health_topic(), 5,
+                                                                 self.active_configuration.get_monitoring_grace_period_duration())
 
     def start(self):
         # self.broker_connection.start_receiving(self.on_handle_message)
@@ -59,7 +59,6 @@ class VirtualDeviceHost:
             bc.stop_receiving()
 
     def on_handle_message(self, broker_connection, topic, msg):
-        # print(topic)
         virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
         for vd in virtual_devices:
             vd.handle_mqtt_message(broker_connection, topic, msg)

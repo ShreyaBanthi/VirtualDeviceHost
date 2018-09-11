@@ -1,7 +1,20 @@
-import time, traceback
+import time
+import traceback
 import json
 import re
 
+
+def delayed_every(first_delay, delay, task):
+    time.sleep(first_delay)
+    next_time = time.time() + delay
+    while True:
+        time.sleep(max(0, next_time - time.time()))
+        try:
+            task()
+        except Exception:
+            traceback.print_exc()
+        # skip tasks if we are behind schedule:
+        next_time += (time.time() - next_time) // delay * delay + delay
 
 def every(delay, task):
     next_time = time.time() + delay
@@ -55,6 +68,7 @@ def get_json_value(data, path):
         return 0
     fixed_last_snapshot = re.sub('([{,:])(\w+)([},:])', '\\1\"\\2\"\\3', str(last_snapshot, 'utf-8'))
     fixed_last_snapshot = fixed_last_snapshot.replace("\'", '"')
+    fixed_last_snapshot = fixed_last_snapshot.replace(":nan", ':null')
     # fixed_last_snapshot = re.sub('([{,:])(\w+)([},:])','\\1\"\\2\"\\3',str(last_snapshot))
     # fixed_last_snapshot = last_snapshot
     last_snapshot_json_document = json.loads(fixed_last_snapshot)

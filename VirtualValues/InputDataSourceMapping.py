@@ -1,5 +1,6 @@
 import json
 import re
+import logging
 
 from Utilities import load_dirty_json
 
@@ -47,4 +48,4 @@ class InputDataSourceMapping:
         elif data_type == 'raw':
             return self.input_data_source.last_data_snapshot
         else:
-            print('unknown data type ' + data_type)
+            logging.warning('unknown data type ' + data_type)

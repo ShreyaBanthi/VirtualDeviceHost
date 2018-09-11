@@ -1,4 +1,5 @@
-from ConfigurationFactory import ConfigurationFactory
+from datetime import timedelta
+from ConfigurationStrategy import ConfigurationStrategy
 from VirtualValues.VirtualValue import VirtualValue
 from VirtualValues.InputDataSource import InputDataSource
 from VirtualDevice import VirtualDevice
@@ -13,11 +14,11 @@ from VirtualValues.AggregatorStrategies.AllBooleanValuesEqualValueAggregatorStra
 from VirtualValues.Packaging.StringReplacePackagerStrategy import StringReplacePackagerStrategy
 
 
-class Scenario2ConfigurationFactory(ConfigurationFactory):
-    def get_device_health_broker_connection(self):
+class Scenario2ConfigurationFactory(ConfigurationStrategy):
+    def get_monitoring_broker_connection(self):
         return 'output'
 
-    def get_device_health_topic(self):
+    def get_monitoring_output_topic(self):
         return 'maproject/health/device-states'
 
     def create_virtual_devices(self):
@@ -69,5 +70,8 @@ class Scenario2ConfigurationFactory(ConfigurationFactory):
 
         return broker_connections
 
-    def is_device_health_monitoring_enabled(self):
+    def is_monitoring_enabled(self):
         return False
+
+    def get_monitoring_grace_period_duration(self):
+        return timedelta(seconds=5)

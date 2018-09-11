@@ -1,17 +1,17 @@
-from VirtualValues.InputDataSource import InputDataSource
+import logging
+from datetime import datetime
 
 
-# sort of container
 class VirtualDevice:
     name = 'unnamed'
-    # input_data_sources = []
-    # virtual_values = []
-    virtual_value_groups = []
-    virtual_functions = []
+    virtual_value_groups = None
+    virtual_functions = None
 
     def __init__(self, name):
         self.name = name
-        print('Virtual Device \"' + name + '\" created.')
+        self.virtual_value_groups = []
+        self.virtual_functions = []
+        logging.info('Virtual Device \"' + name + '\" created.')
 
     def start(self, broker_connection_repository):
         for vvg in self.virtual_value_groups:
@@ -25,26 +25,29 @@ class VirtualDevice:
             vvg.stop()
 
     def handle_mqtt_message(self, broker_connection, topic, msg):
-        # for ids in self.input_data_sources:
-        #     if ids.source_topic == topic and ids.broker_connection_name == broker_connection.connection_name:
-        #         ids.handle_input_message(topic, msg)
         for vvg in self.virtual_value_groups:
             vvg.handle_input_message(broker_connection, topic, msg)
+
         for vf in self.virtual_functions:
             if vf.trigger_broker_connection_name == broker_connection.connection_name and vf.trigger_topic == topic:
                 vf.handle_trigger_message(broker_connection, topic, msg)
-
-    # def add_input_data_source_raw(self, name, source_topic):
-    #     self.input_data_sources.append(InputDataSource(name, source_topic))
-
-    # def add_input_data_source(self, input_data_sources):
-    #     self.input_data_sources.append(input_data_sources)
-
-    # def add_virtual_value(self, new_virtual_value):
-    #    self.virtual_values.append(new_virtual_value)
 
     def add_virtual_value_group(self, new_virtual_value_group):
         self.virtual_value_groups.append(new_virtual_value_group)
 
     def add_virtual_function(self, new_virtual_function):
         self.virtual_functions.append(new_virtual_function)
+
+    def check_if_healthy(self):
+        timestamp = datetime.now().time()
+        for vvg in self.virtual_value_groups:
+            for vv in vvg.virtual_values:
+                for ids in vv.input_data_sources:
+                    if ids.max_age_in_seconds == 0:
+                        continue
+                    if ids.last_timestamp is None:
+                        return False
+                    if timestamp - ids.last_timestamp > ids.max_age_in_seconds:
+                        return False
+
+        return True

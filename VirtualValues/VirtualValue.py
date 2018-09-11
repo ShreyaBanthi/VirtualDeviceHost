@@ -2,9 +2,9 @@ from VirtualValues.InputDataSourceMapping import InputDataSourceMapping
 
 
 class VirtualValue:
-    name = 'unnamed'
-    message_template_symbol = ''
-    input_data_sources = []
+    name = None
+    message_template_symbol = None
+    input_data_sources = None
     aggregator = None
     synthesize_strategy = None
 

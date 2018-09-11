@@ -2,7 +2,6 @@ from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
 class FloatMaximumAggregatorStrategy(AggregatorStrategy):
-
     last_values = {}
 
     def __init__(self):
