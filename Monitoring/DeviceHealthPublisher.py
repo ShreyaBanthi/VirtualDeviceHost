@@ -33,6 +33,7 @@ class DeviceHealthPublisher:
         self.thread.start()
 
     def stop(self):
+        # nothing to do as daemon thread would be stopped automatically when process ends
         pass
 
     def publish_health_state(self):
@@ -50,8 +51,6 @@ class DeviceHealthPublisher:
                 output.states[vd.name] = "degraded"
 
         # convert to json
-
-        # output_json = json.dumps(output)
         output_json = output.to_json()
 
         logging.info('Publishing health state: ' + output_json)
