@@ -15,7 +15,7 @@ class InputDataSource:
     last_timestamp = None
     max_age_in_seconds = 0
 
-    def __init__(self, name, broker_connection_name, source_topic, queue_size, parsing_strategy, max_age_in_seconds):
+    def __init__(self, name, broker_connection_name, source_topic, queue_size, parsing_strategy, max_age_in_seconds=0):
         self.name = name
         self.broker_connection_name = broker_connection_name
         self.source_topic = source_topic
@@ -27,7 +27,7 @@ class InputDataSource:
     def handle_input_message(self, topic, msg):
         if self.source_topic != topic:
             logging.warning('WARNING, mismatching topic')
-        timestamp = datetime.now().time()
+        timestamp = datetime.now()
         parsed_value = self.parsing_strategy.parse(msg.payload)
         data_set = InputDataSet(self, timestamp, parsed_value)
         # if full ..

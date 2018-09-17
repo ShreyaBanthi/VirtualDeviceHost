@@ -39,7 +39,7 @@ class VirtualDevice:
         self.virtual_functions.append(new_virtual_function)
 
     def check_if_healthy(self):
-        timestamp = datetime.now().time()
+        timestamp = datetime.now()
         for vvg in self.virtual_value_groups:
             for vv in vvg.virtual_values:
                 for ids in vv.input_data_sources:
@@ -47,7 +47,7 @@ class VirtualDevice:
                         continue
                     if ids.last_timestamp is None:
                         return False
-                    if timestamp - ids.last_timestamp > ids.max_age_in_seconds:
+                    if (timestamp-ids.last_timestamp).total_seconds() > ids.max_age_in_seconds:
                         return False
 
         return True

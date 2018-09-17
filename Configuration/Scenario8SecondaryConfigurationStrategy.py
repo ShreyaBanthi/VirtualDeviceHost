@@ -14,12 +14,12 @@ from VirtualValues.AggregatorStrategies.FloatMinimumAggregatorStrategy import Fl
 from VirtualValues.AggregatorStrategies.MovingAverageAggregatorStrategy import MovingAverageAggregatorStrategy
 
 
-class Scenario7ConfigurationStrategy(ConfigurationStrategy):
+class Scenario8ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
-        vd = VirtualDevice('Room 12 Temperature Monitor')
+        vd = VirtualDevice('Building 4 Temperature Monitor')
 
-        vvg1 = VirtualValueGroup('facility-system/temperature/room-1', "output")
+        vvg1 = VirtualValueGroup('facility-system/temperature/room-1', "main")
         vvg1.set_generation_strategy(TimedGenerationStrategy(5))
         vvg1.set_packager_strategy(StringReplacePackagerStrategy(
             '{average_temperature:$0, max_temperature:$1, min_temperature:$2, moving_average_temperature:$3}'))
@@ -82,11 +82,8 @@ class Scenario7ConfigurationStrategy(ConfigurationStrategy):
     def create_broker_connections(self):
         broker_connections = []
 
-        input_connection = BrokerConnection("input", "192.168.1.100")
+        input_connection = BrokerConnection("main", "localhost")
         broker_connections.append(input_connection)
-
-        output_connection = BrokerConnection("output", "40.118.61.163")
-        broker_connections.append(output_connection)
 
         return broker_connections
 

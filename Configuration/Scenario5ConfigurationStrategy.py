@@ -1,4 +1,3 @@
-from datetime import timedelta
 from ConfigurationStrategy import ConfigurationStrategy
 from VirtualDevice import VirtualDevice
 from VirtualFunctions.VirtualFunction import VirtualFunction
@@ -7,13 +6,7 @@ from BrokerConnection import BrokerConnection
 from VirtualFunctions.OutputGeneratorStrategies.CopyOutputGeneratorStrategy import CopyOutputGeneratorStrategy
 
 
-class Scenario5ConfigurationFactory(ConfigurationStrategy):
-    def get_monitoring_broker_connection(self):
-        return 'output'
-
-    def get_monitoring_output_topic(self):
-        return 'maproject/health/device-states'
-
+class Scenario5ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
         vd = VirtualDevice('Room 12')
@@ -42,7 +35,13 @@ class Scenario5ConfigurationFactory(ConfigurationStrategy):
         return broker_connections
 
     def is_monitoring_enabled(self):
-        return True
+        return False
 
     def get_monitoring_grace_period_duration(self):
-        return timedelta(seconds=5)
+        return None
+
+    def get_monitoring_broker_connection(self):
+        return None
+
+    def get_monitoring_output_topic(self):
+        return None

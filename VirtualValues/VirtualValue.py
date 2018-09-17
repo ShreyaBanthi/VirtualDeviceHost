@@ -6,7 +6,7 @@ class VirtualValue:
     message_template_symbol = None
     input_data_sources = None
     aggregator = None
-    synthesize_strategy = None
+    # synthesize_strategy = None
 
     # used_synthetisazation_strategy, used_aggregator_strategy
     def __init__(self, name, message_template_symbol):
@@ -14,7 +14,7 @@ class VirtualValue:
         self.message_template_symbol = message_template_symbol
         self.input_data_sources = []
         self.aggregator = None
-        self.synthesize_strategy = None
+        # self.synthesize_strategy = None
 
     # def add_mapping(self, input_data_source, path):
     #     self.mappings.append(InputDataSourceMapping(input_data_source, path))
@@ -28,8 +28,8 @@ class VirtualValue:
     def set_aggregator_strategy(self, new_aggregator_strategy):
         self.aggregator = new_aggregator_strategy
 
-    def set_synthesis_strategy(self, new_synthesis_strategy):
-        self.synthesize_strategy = new_synthesis_strategy
+    # def set_synthesis_strategy(self, new_synthesis_strategy):
+#        self.synthesize_strategy = new_synthesis_strategy
 
     #  in receive phase
     #  def receive_new_incoming_data(self):
@@ -49,9 +49,6 @@ class VirtualValue:
         self.aggregator.aggregate(self.input_data_sources)
 
     def synthesize_value(self):
-        # strategy = AverageSyntStrategy()
-        # strategy = self.synthesize_strategy
-        # synth_value = strategy.synthesize(values)
         synth_value = self.aggregator.synthesize_value()
 
         # TODO: get value, aggregate, synthesize

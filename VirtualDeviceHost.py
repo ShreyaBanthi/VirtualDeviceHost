@@ -27,12 +27,12 @@ class VirtualDeviceHost:
         for vd in virtual_devices:
             self.virtual_device_repository.add_virtual_device(vd)
 
-        if self.active_configuration.is_device_health_monitoring_enabled():
+        if self.active_configuration.is_monitoring_enabled():
             device_health_publisher_broker_connection = self.broker_connection_repository.get_broker_connection(
-                self.active_configuration.get_device_health_broker_connection())
+                self.active_configuration.get_monitoring_broker_connection())
             self.device_health_publisher = DeviceHealthPublisher(self.virtual_device_repository,
                                                                  device_health_publisher_broker_connection,
-                                                                 self.active_configuration.get_device_health_topic(), 5,
+                                                                 self.active_configuration.get_monitoring_output_topic(), 5,
                                                                  self.active_configuration.get_monitoring_grace_period_duration())
 
     def start(self):
@@ -44,7 +44,7 @@ class VirtualDeviceHost:
         for vd in virtual_devices:
             vd.start(self.broker_connection_repository)
 
-        if self.active_configuration.is_device_health_monitoring_enabled():
+        if self.active_configuration.is_monitoring_enabled():
             self.device_health_publisher.start()
 
     def stop(self):
@@ -52,7 +52,7 @@ class VirtualDeviceHost:
         for vd in virtual_devices:
             vd.stop()
 
-        if self.active_configuration.is_device_health_monitoring_enabled():
+        if self.active_configuration.is_monitoring_enabled():
             self.device_health_publisher.stop()
 
         for bc in self.broker_connection_repository.get_all_broker_connections():

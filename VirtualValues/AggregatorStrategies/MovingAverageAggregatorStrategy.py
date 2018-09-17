@@ -22,7 +22,7 @@ class MovingAverageAggregatorStrategy(AggregatorStrategy):
                 self.last_snapshot_values[ids.name] = float(data_set.parsed_data)
 
     def synthesize_value(self):
-        values = self.last_values.values()
+        values = self.last_snapshot_values.values()
         if len(values) == 0:
             return 0
         values_sum = sum(values)

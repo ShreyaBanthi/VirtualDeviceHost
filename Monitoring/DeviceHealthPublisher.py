@@ -55,4 +55,4 @@ class DeviceHealthPublisher:
         output_json = output.to_json()
 
         logging.info('Publishing health state: ' + output_json)
-        self.broker_connection.publish(self.publish_topic, output_json)
+        self.broker_connection.publish(self.publish_topic, output_json, 0)

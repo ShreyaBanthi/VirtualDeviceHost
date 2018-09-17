@@ -19,7 +19,7 @@ class VirtualValueGroup:
     wait_event = None
     qos_level = 0
 
-    def __init__(self, output_topic, broker_connection_name, qos_level):
+    def __init__(self, output_topic, broker_connection_name, qos_level=0):
         self.id = str(uuid.uuid4())
         self.qos_level = qos_level
         self.output_topic = output_topic
