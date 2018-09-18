@@ -23,7 +23,7 @@ class Scenario8ConfigurationStrategy(ConfigurationStrategy):
         vvg1 = VirtualValueGroup('facility-system/temperature/room-1', "output")
         vvg1.set_generation_strategy(TimedGenerationStrategy(5))
         vvg1.set_packager_strategy(StringReplacePackagerStrategy(
-            '{average_temperature:$0, max_temperature:$1, min_temperature:$2, moving_average_temperature:$3}'))
+            '{"average_temperature":$0, "max_temperature":$1, "min_temperature":$2, "moving_average_temperature":$3}'))
 
         # add virtual values
         vv1 = VirtualValue('Current Temperature Value', '$0')
@@ -86,19 +86,19 @@ class Scenario8ConfigurationStrategy(ConfigurationStrategy):
         input_connection = BrokerConnection("input", "192.168.1.100")
         broker_connections.append(input_connection)
 
-        output_connection = BrokerConnection("output", "40.118.61.163")
+        output_connection = BrokerConnection("output", "23.100.9.44")
         broker_connections.append(output_connection)
 
         return broker_connections
 
     def is_monitoring_enabled(self):
-        return True
+        return False
 
     def get_monitoring_grace_period_duration(self):
-        return timedelta(seconds=5)
+        return None
 
     def get_monitoring_broker_connection(self):
-        return 'output'
+        return None
 
     def get_monitoring_output_topic(self):
-        return 'maproject/health/device-states'
+        return None

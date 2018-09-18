@@ -16,6 +16,7 @@ def delayed_every(first_delay, delay, task):
         # skip tasks if we are behind schedule:
         next_time += (time.time() - next_time) // delay * delay + delay
 
+
 def every(delay, task):
     next_time = time.time() + delay
     while True:
@@ -73,15 +74,8 @@ def get_json_value(data, path):
     last_snapshot = data
     if last_snapshot == '':
         return 0
-    fixed_last_snapshot = last_snapshot
-    # fixed_last_snapshot = re.sub('([{,:])(\w+)([},:])', '\\1\"\\2\"\\3', str(last_snapshot, 'utf-8'))
-    # fixed_last_snapshot = fixed_last_snapshot.replace("\'", '"')
-    # fixed_last_snapshot = fixed_last_snapshot.replace(":nan", ':null')
-    ### fixed_last_snapshot = re.sub('([{,:])(\w+)([},:])','\\1\"\\2\"\\3',str(last_snapshot))
-    # fixed_last_snapshot = last_snapshot
+    fixed_last_snapshot = re.sub('([{,])(\w+)([},:])', '\\1\"\\2\"\\3', str(last_snapshot, 'utf-8'))
+    fixed_last_snapshot = fixed_last_snapshot.replace("\'", '"')
+    fixed_last_snapshot = fixed_last_snapshot.replace(":nan", ':null')
     last_snapshot_json_document = json.loads(fixed_last_snapshot)
-    # fixed_last_snapshot = load_dirty_json(last_snapshot)
-    # return fixed_last_snapshot
-    # return last_snapshot_json_document[self.path]
-    # return self.get_inner_json_value(last_snapshot_json_document, self.path)
     return get_inner_json_value(last_snapshot_json_document, path)
