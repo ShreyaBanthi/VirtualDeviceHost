@@ -1,7 +1,5 @@
-from VirtualFunctions.OutputGeneratorStrategy import OutputGeneratorStrategy
-
-
 import re
+from VirtualFunctions.OutputGeneratorStrategy import OutputGeneratorStrategy
 
 
 class JarvisLightStripOutputGeneratorStrategy(OutputGeneratorStrategy):

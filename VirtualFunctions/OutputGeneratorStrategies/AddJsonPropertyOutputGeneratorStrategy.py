@@ -1,6 +1,6 @@
+import json
 from VirtualFunctions.OutputGeneratorStrategy import OutputGeneratorStrategy
 from Utilities import load_dirty_json
-import json
 
 
 class AddJsonPropertyOutputGeneratorStrategy(OutputGeneratorStrategy):

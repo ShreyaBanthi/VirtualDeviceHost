@@ -3,8 +3,8 @@ from functools import reduce
 
 
 class MovingAverageAggregatorStrategy(AggregatorStrategy):
-    last_calculated_values = []
-    last_snapshot_values = {}
+    last_calculated_values = None
+    last_snapshot_values = None
     data_set_size = 5
 
     def __init__(self, data_set_size=5):

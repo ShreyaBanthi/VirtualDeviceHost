@@ -1,5 +1,3 @@
-from ConfigurationStrategy import ConfigurationStrategy
-
 import importlib
 
 

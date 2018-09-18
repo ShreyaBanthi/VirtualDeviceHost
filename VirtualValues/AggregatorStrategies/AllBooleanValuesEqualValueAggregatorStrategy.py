@@ -2,10 +2,11 @@ from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
 class AllBooleanValuesEqualValueAggregatorStrategy(AggregatorStrategy):
-    last_values = {}
+    last_values = None
     expected_value = False
 
     def __init__(self, expected_value):
+        self.last_values = {}
         self.expected_value = expected_value
 
     def prepare(self):

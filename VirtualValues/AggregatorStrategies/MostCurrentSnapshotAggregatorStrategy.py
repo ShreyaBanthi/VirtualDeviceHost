@@ -1,7 +1,7 @@
 from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
-class BasicFloatAverageAggregatorStrategy(AggregatorStrategy):
+class MostCurrentSnapshotAggregatorStrategy(AggregatorStrategy):
     last_values = None
 
     def __init__(self):
@@ -19,6 +19,5 @@ class BasicFloatAverageAggregatorStrategy(AggregatorStrategy):
     def synthesize_value(self):
         values = self.last_values.values()
         if len(values) == 0:
-            return 0
-        values_sum = sum(values)
-        return round(values_sum / len(values), 2)
+            return []
+        return values

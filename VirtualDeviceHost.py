@@ -1,5 +1,3 @@
-import logging
-
 from VirtualDeviceRepository import VirtualDeviceRepository
 from Monitoring.DeviceHealthPublisher import DeviceHealthPublisher
 from ConfigurationFactory import ConfigurationFactory
@@ -36,7 +34,6 @@ class VirtualDeviceHost:
                                                                  self.active_configuration.get_monitoring_grace_period_duration())
 
     def start(self):
-        # self.broker_connection.start_receiving(self.on_handle_message)
         for bc in self.broker_connection_repository.get_all_broker_connections():
             bc.start_receiving(self.on_handle_message)
 

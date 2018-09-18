@@ -2,10 +2,10 @@ from VirtualValues.AggregatorStrategy import AggregatorStrategy
 
 
 class FloatMinimumAggregatorStrategy(AggregatorStrategy):
-    last_values = {}
+    last_values = None
 
     def __init__(self):
-        pass
+        self.last_values = {}
 
     def prepare(self):
         pass

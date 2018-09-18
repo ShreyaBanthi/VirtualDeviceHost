@@ -1,5 +1,5 @@
 class VirtualDeviceRepository:
-    virtual_devices = []
+    virtual_devices = None
 
     def __init__(self):
         self.virtual_devices = []

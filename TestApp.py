@@ -16,10 +16,6 @@ class TestApp:
         virtual_device_host = VirtualDeviceHost()
         print("Configuration: " + sys.argv[1])
         virtual_device_host.initialize(sys.argv[1])
-        # virtual_device_host.initialize('Scenario1ConfigurationStrategy')
-        # virtual_device_host.initialize('Scenario2ConfigurationStrategy')
-        # virtual_device_host.initialize('Scenario4ConfigurationStrategy')
-        # virtual_device_host.initialize('Scenario8ConfigurationStrategy')
 
         print('Now listening')
 

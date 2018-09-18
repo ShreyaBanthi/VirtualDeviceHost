@@ -12,18 +12,6 @@ class GenerationStrategy(metaclass=ABCMeta):
         self.virtual_value_group = virtual_value_group
         self.wait_event = self.virtual_value_group.wait_event
 
-    # @abstractmethod
-    # def start(self):
-    #    return None
-
-    # @abstractmethod
-    # def stop(self):
-    #    return None
-
-    # @abstractmethod
-    # def package(self):
-    #    return None
-
     def start(self):
         pass
 

@@ -1,4 +1,3 @@
-import time, traceback
 from datetime import datetime
 from VirtualValues.GenerationStrategy import GenerationStrategy
 

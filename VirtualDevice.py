@@ -49,5 +49,4 @@ class VirtualDevice:
                         return False
                     if (timestamp-ids.last_timestamp).total_seconds() > ids.max_age_in_seconds:
                         return False
-
         return True
