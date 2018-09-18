@@ -3,7 +3,7 @@ import logging
 from VirtualDeviceHost import VirtualDeviceHost
 
 
-class TestApp:
+class VDHApp:
     def __init__(self):
         # logging.basicConfig(level=logging.INFO)
         logging.basicConfig(level=logging.DEBUG)
@@ -29,5 +29,5 @@ class TestApp:
 
 
 if __name__ == '__main__':
-    my_TestApp = TestApp()
+    app = VDHApp()
     print("done")

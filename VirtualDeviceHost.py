@@ -30,8 +30,9 @@ class VirtualDeviceHost:
                 self.active_configuration.get_monitoring_broker_connection())
             self.device_health_publisher = DeviceHealthPublisher(self.virtual_device_repository,
                                                                  device_health_publisher_broker_connection,
-                                                                 self.active_configuration.get_monitoring_output_topic(), 5,
-                                                                 self.active_configuration.get_monitoring_grace_period_duration())
+                                                                 self.active_configuration.get_monitoring_output_topic()
+                                                                 , 5, self.active_configuration
+                                                                 .get_monitoring_grace_period_duration())
 
     def start(self):
         for bc in self.broker_connection_repository.get_all_broker_connections():

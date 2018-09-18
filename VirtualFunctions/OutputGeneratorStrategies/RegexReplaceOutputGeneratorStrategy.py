@@ -15,7 +15,5 @@ class RegexReplaceOutputGeneratorStrategy(OutputGeneratorStrategy):
         self.replace_string = str(replace_string)
 
     def generate(self, source_message):
-        # updated_string = self.compiled_regex.sub(source_message, self.replace_string)
-        # updated_string = re.sub(self.regex_string, self.replace_string, source_message)
         updated_string = self.compiled_regex.sub(self.replace_string, source_message)
         return updated_string

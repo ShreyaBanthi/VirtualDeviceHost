@@ -35,12 +35,9 @@ class DeviceHealthPublisher:
 
     def publish_health_state(self):
         virtual_devices = self.virtual_device_repository.get_all_virtual_devices()
-
         output = MonitoringOutputMessage()
 
         # check all devices
-
-        # reference_timestamp = datetime.now().time()
         for vd in virtual_devices:
             if vd.check_if_healthy():
                 output.states[vd.name] = "normal"
