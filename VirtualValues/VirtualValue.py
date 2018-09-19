@@ -33,7 +33,6 @@ class VirtualValue:
     def synthesize_value(self):
         synth_value = self.aggregator.synthesize_value()
 
-        # TODO: get value, aggregate, synthesize
         return synth_value
 
 

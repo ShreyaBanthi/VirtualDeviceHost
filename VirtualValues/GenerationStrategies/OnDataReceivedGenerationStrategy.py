@@ -1,8 +1,6 @@
 from datetime import datetime
 from VirtualValues.GenerationStrategy import GenerationStrategy
 
-# if DataReceiver timestamp newer than saved last sent timestamp value
-
 
 class OnDataReceivedGenerationStrategy(GenerationStrategy):
     last_timestamp = None
@@ -12,6 +10,7 @@ class OnDataReceivedGenerationStrategy(GenerationStrategy):
             self.last_timestamp = datetime.now()
             return True
 
+        # loop through all InputDataSources, if timestamp newer than last_timestamp than True, else false
         for vv in self.virtual_value_group.virtual_values:
             for ids in vv.input_data_sources:
                 if ids.last_timestamp is not None and ids.last_timestamp > self.last_timestamp:
@@ -19,4 +18,3 @@ class OnDataReceivedGenerationStrategy(GenerationStrategy):
                     return True
 
         return False
-        # loop through all InputDataSources, if timestamp newer than last_timestamp than True, else false

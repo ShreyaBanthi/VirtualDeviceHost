@@ -20,7 +20,7 @@ class VirtualFunction:
         self.trigger_topic = trigger_topic
         self.queue = queue.Queue()
         self.worker_thread = threading.Thread(target=lambda: self.handle_work())
-        self.worker_thread.setDaemon(True)  # no longer necessary because of is_active
+        self.worker_thread.setDaemon(True)
         self.output_qos_level = output_qos_level
 
     def add_output_target(self, new_output_target):

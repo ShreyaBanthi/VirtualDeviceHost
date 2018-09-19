@@ -5,8 +5,8 @@ from VirtualDeviceHost import VirtualDeviceHost
 
 class VDHApp:
     def __init__(self):
-        # logging.basicConfig(level=logging.INFO)
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.INFO)
+        # logging.basicConfig(level=logging.DEBUG)
 
         if len(sys.argv) != 2:
             print('ERROR: Invalid configuration. Enter active configuration as command line argument.')
