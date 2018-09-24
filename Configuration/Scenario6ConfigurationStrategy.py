@@ -10,7 +10,7 @@ from VirtualFunctions.OutputGeneratorStrategies.RegexReplaceOutputGeneratorStrat
 class Scenario6ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
-        vd = VirtualDevice('Room 12')
+        vd = VirtualDevice('Room 1')
 
         vf = VirtualFunction('Light-Switcher', 'main', 'maproject/light/1')
         vf.add_output_target(OutputTarget('Light 2', 'main', 'jarvis/lightstrip/103/pushes',

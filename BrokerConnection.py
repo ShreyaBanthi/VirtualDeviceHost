@@ -20,7 +20,7 @@ class BrokerConnection:
 
     # The callback for when the client receives a CONNACK response from the server.
     def on_connect(self, client, userdata, flags, rc):
-        logging.info("Connected with result code " + str(rc))
+        logging.info("BrokerConnection connected ")
 
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.

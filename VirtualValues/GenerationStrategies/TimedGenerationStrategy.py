@@ -11,6 +11,7 @@ class TimedGenerationStrategy(GenerationStrategy):
     def __init__(self, cycle_in_seconds):
         self.cycle_in_seconds = cycle_in_seconds
         self.wait_thread = threading.Thread(target=lambda: every(self.cycle_in_seconds, self.on_wake_up))
+        self.wait_thread.setDaemon(True)
 
     def start(self):
         self.wait_thread.start()

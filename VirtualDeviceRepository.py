@@ -1,4 +1,5 @@
 class VirtualDeviceRepository:
+    """manages transiently-stored virtual devices"""
     virtual_devices = None
 
     def __init__(self):

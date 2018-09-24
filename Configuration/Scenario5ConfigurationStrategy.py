@@ -9,7 +9,7 @@ from VirtualFunctions.OutputGeneratorStrategies.CopyOutputGeneratorStrategy impo
 class Scenario5ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
-        vd = VirtualDevice('Room 12')
+        vd = VirtualDevice('Room 1')
 
         vf = VirtualFunction('Light-Switcher', 'main', 'maproject/light/1')
         vf.add_output_target(OutputTarget('Light 103', 'main', 'jarvis/lightstrip/103/pushes',

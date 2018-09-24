@@ -9,25 +9,29 @@ class VDHApp:
         # logging.basicConfig(level=logging.DEBUG)
 
         if len(sys.argv) != 2:
-            print('ERROR: Invalid configuration. Enter active configuration as command line argument.')
+            logging.error('ERROR: Invalid configuration. Enter active configuration as command line argument.')
             return
 
-        print("Started")
+        # print("Started")
         virtual_device_host = VirtualDeviceHost()
-        print("Configuration: " + sys.argv[1])
+        # print("Configuration: " + sys.argv[1])
+        logging.info('active configuration: ' + sys.argv[1])
         virtual_device_host.initialize(sys.argv[1])
 
-        print('Now listening')
+        # print('Now listening')
 
         virtual_device_host.start()
 
-        input("Press Enter to exit...")
+        logging.info('VirtualDeviceHost now running')
+        logging.info('Press ENTER to exit...')
+        input()
+        # input("Press Enter to exit...")
 
         virtual_device_host.stop()
 
-        print('Exiting')
+        # print('Exiting')
+        logging.info('Exiting')
 
 
 if __name__ == '__main__':
     app = VDHApp()
-    print("done")

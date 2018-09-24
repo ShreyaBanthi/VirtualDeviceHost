@@ -97,5 +97,6 @@ class VirtualValueGroup:
                     synthesized_values[vv] = synthesized_value
                 msg = self.packager_strategy.package(self.virtual_values, synthesized_values)
                 self.publish(msg)
-            self.wait_event.wait()
-            self.wait_event.clear()
+            if self.is_active:
+                self.wait_event.wait()
+                self.wait_event.clear()

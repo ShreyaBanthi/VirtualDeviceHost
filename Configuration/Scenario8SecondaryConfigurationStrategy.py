@@ -23,25 +23,25 @@ class Scenario8SecondaryConfigurationStrategy(ConfigurationStrategy):
         # add virtual values
         vv1 = VirtualValue('Current Temperature Value', '$0')
         vv1.add_input_data_source(InputDataSource('EnvironmentSensor1', 'main', "facility-system/temperature/room-1",
-                                                  5, JsonParsingStrategy("average_temperature"), 60))
+                                                  JsonParsingStrategy("average_temperature")))
         vv1.set_aggregator_strategy(BasicFloatAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv1)
 
         vv2 = VirtualValue('Maximum Temperature Value', '$1')
         vv2.add_input_data_source(InputDataSource('EnvironmentSensor1', 'main', "facility-system/temperature/room-1",
-                                                  5, JsonParsingStrategy("max_temperature"), 60))
+                                                  JsonParsingStrategy("max_temperature")))
         vv2.set_aggregator_strategy(BasicFloatAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv2)
 
         vv3 = VirtualValue('Minimum Temperature Value', '$2')
         vv3.add_input_data_source(InputDataSource('EnvironmentSensor1', 'main', "facility-system/temperature/room-1",
-                                                  5, JsonParsingStrategy("min_temperature"), 60))
+                                                  JsonParsingStrategy("min_temperature")))
         vv3.set_aggregator_strategy(BasicFloatAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv3)
 
         vv4 = VirtualValue('Moving Average Temperature Value', '$3')
         vv4.add_input_data_source(InputDataSource('EnvironmentSensor1', 'main', "facility-system/temperature/room-1",
-                                                  5, JsonParsingStrategy("moving_average_temperature"), 60))
+                                                  JsonParsingStrategy("moving_average_temperature")))
         vv4.set_aggregator_strategy(BasicFloatAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv4)
 

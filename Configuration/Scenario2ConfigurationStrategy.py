@@ -24,19 +24,19 @@ class Scenario2ConfigurationStrategy(ConfigurationStrategy):
 
         # add virtual values
         vv1 = VirtualValue('All Doors Closed', '$0')
-        vv1.add_input_data_source(InputDataSource('DoorSensor1', 'input', "jarvis/door/1/changes", 0,
+        vv1.add_input_data_source(InputDataSource('DoorSensor1', 'input', "jarvis/door/1/changes",
                                                   JsonParsingStrategy('newState')))
-        vv1.add_input_data_source(InputDataSource('DoorSensor2', 'input', "jarvis/door/2/changes", 0,
+        vv1.add_input_data_source(InputDataSource('DoorSensor2', 'input', "jarvis/door/2/changes",
                                                   JsonParsingStrategy('newState')))
         vv1.set_aggregator_strategy(AllBooleanValuesEqualValueAggregatorStrategy('closed'))
         vvg1.add_virtual_value(vv1)
 
         vv2 = VirtualValue('All Windows Closed', '$1')
-        vv2.add_input_data_source(InputDataSource('WindowSensor1', 'input', "jarvis/window/1/changes", 0,
+        vv2.add_input_data_source(InputDataSource('WindowSensor1', 'input', "jarvis/window/1/changes",
                                                   JsonParsingStrategy('newState')))
-        vv2.add_input_data_source(InputDataSource('WindowSensor2', 'input', "jarvis/window/2/changes", 0,
+        vv2.add_input_data_source(InputDataSource('WindowSensor2', 'input', "jarvis/window/2/changes",
                                                   JsonParsingStrategy('newState')))
-        vv2.add_input_data_source(InputDataSource('WindowSensor3', 'input', "jarvis/window/3/changes", 0,
+        vv2.add_input_data_source(InputDataSource('WindowSensor3', 'input', "jarvis/window/3/changes",
                                                   JsonParsingStrategy('newState')))
         vv2.set_aggregator_strategy(AllBooleanValuesEqualValueAggregatorStrategy('closed'))
         vvg1.add_virtual_value(vv2)

@@ -17,7 +17,7 @@ from VirtualValues.AggregatorStrategies.MovingAverageAggregatorStrategy import M
 class Scenario1ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
-        vd = VirtualDevice('Room 12 Temperature Monitor')
+        vd = VirtualDevice('Room 1 Temperature Monitor')
 
         vvg1 = VirtualValueGroup('facility-system/temperature/room-1', "output")
         vvg1.set_generation_strategy(TimedGenerationStrategy(5))
@@ -27,49 +27,49 @@ class Scenario1ConfigurationStrategy(ConfigurationStrategy):
         # add virtual values
         vv1 = VirtualValue('Current Temperature Value', '$0')
         vv1.add_input_data_source(InputDataSource('EnvironmentSensor1', 'input', "maproject/environment/2/updates",
-                                                  5, JsonParsingStrategy("temperature"), 60))
+                                                  JsonParsingStrategy("temperature")))
         vv1.add_input_data_source(InputDataSource("TemperatureSensor20", "input", "maproject/temperature/20/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv1.add_input_data_source(InputDataSource("TemperatureSensor21", "input", "maproject/temperature/21/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv1.add_input_data_source(InputDataSource("TemperatureSensor22", "input", "maproject/temperature/22/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv1.set_aggregator_strategy(BasicFloatAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv1)
 
         vv2 = VirtualValue('Maximum Temperature Value', '$1')
         vv2.add_input_data_source(InputDataSource('EnvironmentSensor1', 'input', "maproject/environment/2/updates",
-                                                  5, JsonParsingStrategy("temperature"), 60))
+                                                  JsonParsingStrategy("temperature")))
         vv2.add_input_data_source(InputDataSource("TemperatureSensor20", "input", "maproject/temperature/20/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv2.add_input_data_source(InputDataSource("TemperatureSensor21", "input", "maproject/temperature/21/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv2.add_input_data_source(InputDataSource("TemperatureSensor22", "input", "maproject/temperature/22/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv2.set_aggregator_strategy(FloatMaximumAggregatorStrategy())
         vvg1.add_virtual_value(vv2)
 
         vv3 = VirtualValue('Minimum Temperature Value', '$2')
         vv3.add_input_data_source(InputDataSource('EnvironmentSensor1', 'input', "maproject/environment/2/updates",
-                                                 5, JsonParsingStrategy("temperature"), 60))
+                                                  JsonParsingStrategy("temperature")))
         vv3.add_input_data_source(InputDataSource("TemperatureSensor20", "input", "maproject/temperature/20/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv3.add_input_data_source(InputDataSource("TemperatureSensor21", "input", "maproject/temperature/21/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv3.add_input_data_source(InputDataSource("TemperatureSensor22", "input", "maproject/temperature/22/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv3.set_aggregator_strategy(FloatMinimumAggregatorStrategy())
         vvg1.add_virtual_value(vv3)
 
         vv4 = VirtualValue('Moving Average Temperature Value', '$3')
         vv4.add_input_data_source(InputDataSource('EnvironmentSensor1', 'input', "maproject/environment/2/updates",
-                                                  5, JsonParsingStrategy("temperature"), 60))
+                                                  JsonParsingStrategy("temperature")))
         vv4.add_input_data_source(InputDataSource("TemperatureSensor20", "input", "maproject/temperature/20/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv4.add_input_data_source(InputDataSource("TemperatureSensor21", "input", "maproject/temperature/21/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv4.add_input_data_source(InputDataSource("TemperatureSensor22", "input", "maproject/temperature/22/updates",
-                                                  5, RawParsingStrategy(), 60))
+                                                  RawParsingStrategy()))
         vv4.set_aggregator_strategy(MovingAverageAggregatorStrategy())
         vvg1.add_virtual_value(vv4)
 
