@@ -9,8 +9,35 @@ Focus of the solution lies in extensibility as well as configurability to allow 
 
 ## Setup
 
-...
+1. install dependencies
 
+    sudo apt-get install libxml2-dev
+    sudo apt-get install libxslt-dev
+
+2. create virtual environment (for example: *python3 -m venv vdh-venv*)
+
+    python3 -m venv vdh-venv
+
+3. load virtual environment
+
+    source vdh-venv/bin/activate
+
+4. install pip dependencies
+
+    pip install -r requirements.txt
+
+## Usage
+
+1. if necessary, create configuration strategy file in directory *Configuration* (look inside for examples)
+
+1. load virtual environment
+
+    source vdh-venv/bin/activate
+
+1. run with configuration strategy file name as argument
+
+    python VDHApp.py MyFirstConfigurationStrategy
+    
 ## License
 
 [LGPL-3.0 License](/LICENSE)
