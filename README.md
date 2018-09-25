@@ -11,8 +11,10 @@ Focus of the solution lies in extensibility as well as configurability to allow 
 
 1. install dependencies
 
+```
     sudo apt-get install libxml2-dev
     sudo apt-get install libxslt-dev
+```
 
 2. create virtual environment (for example: *python3 -m venv vdh-venv*)
 
