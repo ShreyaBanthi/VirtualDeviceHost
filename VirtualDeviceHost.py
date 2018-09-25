@@ -11,20 +11,25 @@ class VirtualDeviceHost:
     active_configuration = None
 
     def initialize(self, configuration_name):
+        # load configuration
         configuration_factory = ConfigurationFactory()
         self.active_configuration = configuration_factory.create_configuration(configuration_name)
 
+        # initialize repositories
         self.virtual_device_repository = VirtualDeviceRepository()
         self.broker_connection_repository = BrokerConnectionRepository()
 
+        # initialize broker connections
         broker_connections = self.active_configuration.create_broker_connections()
         for bc in broker_connections:
             self.broker_connection_repository.add_broker_connection(bc)
 
+        # initialize virtual devices
         virtual_devices = self.active_configuration.create_virtual_devices()
         for vd in virtual_devices:
             self.virtual_device_repository.add_virtual_device(vd)
 
+        # initialize monitoring (if enabled)
         if self.active_configuration.is_monitoring_enabled():
             device_health_publisher_broker_connection = self.broker_connection_repository.get_broker_connection(
                 self.active_configuration.get_monitoring_broker_connection())

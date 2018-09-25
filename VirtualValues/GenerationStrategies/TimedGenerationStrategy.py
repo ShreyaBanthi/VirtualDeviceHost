@@ -17,7 +17,9 @@ class TimedGenerationStrategy(GenerationStrategy):
         self.wait_thread.start()
 
     def on_wake_up(self):
+        """executed in every cycle"""
         self.has_cycle_completed = True
+        # wake up potentially-sleeping virtual value group
         self.virtual_value_group.set_wait_event()
 
     def should_generate(self):

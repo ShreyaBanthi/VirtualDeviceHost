@@ -7,18 +7,18 @@ from VirtualFunctions.OutputGeneratorStrategies.RegexReplaceOutputGeneratorStrat
     import RegexReplaceOutputGeneratorStrategy
 
 
-class Scenario6ConfigurationStrategy(ConfigurationStrategy):
+class Scenario9ConfigurationStrategy(ConfigurationStrategy):
     def create_virtual_devices(self):
         vds = []
         vd = VirtualDevice('Room 1')
 
         vf = VirtualFunction('Light-Switcher', 'main', 'maproject/light/1')
         vf.add_output_target(OutputTarget('Light 2', 'main', 'jarvis/lightstrip/103/pushes',
-                                          RegexReplaceOutputGeneratorStrategy('\'lightId\':(\d)*', 'lightId:103')))
+                                          RegexReplaceOutputGeneratorStrategy('\'newBlue\':255', '\'newBlue\':0')))
         vf.add_output_target(OutputTarget('Light 3', 'main', 'jarvis/lightstrip/105/pushes',
-                                          RegexReplaceOutputGeneratorStrategy('\'lightId\':(\d)*', 'lightId:105')))
+                                          RegexReplaceOutputGeneratorStrategy('\'newGreen\':255', '\'newGreen\':0')))
         vf.add_output_target(OutputTarget('Light 4', 'main', 'jarvis/lightstrip/107/pushes',
-                                          RegexReplaceOutputGeneratorStrategy('\'lightId\':(\d)*', 'lightId:107')))
+                                          RegexReplaceOutputGeneratorStrategy('\'newRed\':255', '\'newRed\':0')))
 
         vd.add_virtual_function(vf)
 

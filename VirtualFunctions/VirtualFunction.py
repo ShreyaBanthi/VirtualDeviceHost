@@ -21,6 +21,7 @@ class VirtualFunction:
         self.queue = queue.Queue()
         self.worker_thread = threading.Thread(target=lambda: self.handle_work())
         self.worker_thread.setDaemon(True)
+        self.worker_thread.start()
         self.output_qos_level = output_qos_level
 
     def add_output_target(self, new_output_target):
@@ -42,12 +43,12 @@ class VirtualFunction:
                 msg = self.queue.get(block=True, timeout=5)
                 if msg is not None:
                     self.execute(msg)
-            except queue.Queue.Empty:
+            except queue.Empty:
                 pass
 
     def execute(self, msg):
         logging.info('executing virtual function')
-        msg_string = str(msg.payload)
+        msg_string = str(msg.payload, 'utf-8')
         logging.info('INPUT: ' + msg_string)
         # loop through all output targets ..
         for ot in self.output_targets:

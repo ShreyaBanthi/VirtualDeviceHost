@@ -7,6 +7,10 @@ class AggregatorStrategy(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def prepare(self):
+        pass
+
+    @abstractmethod
     def aggregate(self, input_data_sources):
         pass
 

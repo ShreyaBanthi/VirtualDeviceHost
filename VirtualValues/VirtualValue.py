@@ -20,6 +20,7 @@ class VirtualValue:
 
     def set_aggregator_strategy(self, new_aggregator_strategy):
         self.aggregator = new_aggregator_strategy
+        self.aggregator.prepare()
 
     def aggregate_values(self):
         values = self.aggregator.aggregate(self.mappings)

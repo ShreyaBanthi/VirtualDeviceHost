@@ -3,6 +3,7 @@ import paho.mqtt.client as mqtt
 
 
 class BrokerConnection:
+    """manages transiently-stored broker connections"""
     client = None
     handler_method = None
     connection_name = ''
@@ -31,11 +32,6 @@ class BrokerConnection:
 
     def start_receiving(self, handler_method):
         self.handler_method = handler_method
-        # Blocking call that processes network traffic, dispatches callbacks and
-        # handles reconnecting.
-        # Other loop*() functions are available that give a threaded interface and a
-        # manual interface.
-        # self.client.loop_forever()
         self.client.loop_start()
 
     def stop_receiving(self):

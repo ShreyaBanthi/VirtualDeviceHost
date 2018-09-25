@@ -9,6 +9,7 @@ class XmlParsingStrategy(ParsingStrategy):
         self.path = path
 
     def parse(self, raw_payload):
+        # load xml string and parse/traverse via XPath
         tree = lxml.etree.fromstring(raw_payload)
         root = tree.getroot()
         r = root.xpath(self.path)
