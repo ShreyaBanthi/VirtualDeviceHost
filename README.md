@@ -16,7 +16,7 @@ sudo apt-get install libxml2-dev
 sudo apt-get install libxslt-dev
 ```
 
-2. create virtual environment (for example: *python3 -m venv vdh-venv*)
+2. create virtual environment
 
 ```
 python3 -m venv vdh-venv
