@@ -34,21 +34,27 @@ source vdh-venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Usage
+## Manual usage
 
 1. if necessary, create configuration strategy file in directory *Configuration* (look inside for examples)
 
-1. load virtual environment
+2. load virtual environment
 
 ```
 source vdh-venv/bin/activate
 ```
 
-1. run with configuration strategy file name as argument
+3. run with configuration strategy file name as argument
 
 ```
 python VDHApp.py MyFirstConfigurationStrategy
 ```
+
+## Background usage
+
+1. if necessary, create configuration strategy file in directory *Configuration* (look inside for examples)
+
+2. follow guide in [wiki](/wiki/Set-up-as-background-service-(daemon))
 
 ## License
 
