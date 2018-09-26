@@ -54,7 +54,7 @@ python VDHApp.py MyFirstConfigurationStrategy
 
 1. if necessary, create configuration strategy file in directory *Configuration* (look inside for examples)
 
-2. follow guide in [wiki](/wiki/Set-up-as-background-service-(daemon))
+2. follow guide in [wiki](../../wiki/Set-up-as-background-service-(daemon))
 
 ## License
 
